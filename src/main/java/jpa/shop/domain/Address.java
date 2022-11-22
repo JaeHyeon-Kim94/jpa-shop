@@ -1,4 +1,80 @@
 package jpa.shop.domain;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Embeddable;
+import java.lang.reflect.Field;
+import java.util.Objects;
+
+@Embeddable
+@Access(AccessType.FIELD)
 public class Address {
+    private String city;
+    private String street;
+    private String zipcode;
+
+    public Address() {
+    }
+
+    public Address(String city, String street, String zipcode) {
+        this.city = city;
+        this.street = street;
+        this.zipcode = zipcode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", zipcode='" + zipcode + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return Objects.equals(city, address.city) && Objects.equals(street, address.street) && Objects.equals(zipcode, address.zipcode);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 0;
+
+        Field[] fields = this.getClass().getDeclaredFields();
+        for( Field f : fields) {
+            try {
+                result = result * 31 + __hashCode(f);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
+    }
+
+    private int __hashCode(Field f) throws IllegalAccessException {
+        Object val = f.get(this);
+        if (val == null) {
+            return 0;
+        }
+        String v = val.toString();
+        return v.hashCode();
+    }
+
+
 }
+

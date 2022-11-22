@@ -1,4 +1,5 @@
 package jpa.shop.domain;
 
-public class DeliveryStatus {
+public enum DeliveryStatus {
+    READY, COMP
 }

@@ -24,4 +24,62 @@ public class Category {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")
     private Category parent;
+
+    @OneToMany( mappedBy="parent")
+    private List<Category> childs = new ArrayList<>();
+
+    public void addChildCategory(Category child){
+        this.childs.add(child);
+        child.setParent(this);
+    }
+
+    public void addItem(Item item){ items.add(item); }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public Category getParent() {
+        return parent;
+    }
+
+    public List<Category> getChilds() {
+        return childs;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public void setParent(Category parent) {
+        this.parent = parent;
+    }
+
+    public void setChilds(List<Category> childs) {
+        this.childs = childs;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
